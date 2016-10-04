@@ -64,7 +64,6 @@ describe "transaction record endpoints" do
     get "/api/v1/transactions/find_all?result=Failed"
 
     parsed_transactions = JSON.parse(response.body)
-    byebug
     expect(response).to be_success
     expect(parsed_transactions.count).to eq(1)
   end
