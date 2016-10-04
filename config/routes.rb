@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
-  get "/api/v1/invoices/find", to: "api/v1/invoices/search#show"
-  get "/api/v1/invoices/find_all", to: "api/v1/invoices/search#index"
-
-
   namespace :api do
     namespace :v1 do
+      namespace :invoices do
+        get "/find", to: "search#show"
+        get "/find_all", to: "search#index"
+      end
+
       resources :invoices, only: [:index, :show]
     end
   end
