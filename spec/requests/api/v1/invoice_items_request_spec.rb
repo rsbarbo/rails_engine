@@ -6,16 +6,20 @@ describe "invoice_items actions" do
     get "/api/v1/invoice_items.json"
     parse_invoice_items = JSON.parse(response.body)
 
-    expect(parse_invoice_items).to be_success
+    expect(response).to be_success
     expect(parse_invoice_items.count).to eq(3)
   end
 
-  it "returns a list of all invoice items" do
-    invoice_item = Fabricate(:invoice_item)
-    get "/api/v1/invoice_items/#{invoice_item.id}.json"
+  it "returns a single invoice items" do
+    item_1 = Fabricate(:invoice_item, id: 1)
+    Fabricate(:invoice_item, id: 2)
+    Fabricate(:invoice_item, id: 3)
+
+    get "/api/v1/invoice_items/1"
+
     parse_invoice_items = JSON.parse(response.body)
 
-    expect(parse_invoice_items).to be_success
-    expect(parse_invoice_items.count).to eq(1)
+    expect(response).to be_success
+    expect(parse_invoice_items["unit_price"]).to eq(item_1.unit_price)
   end
 end
