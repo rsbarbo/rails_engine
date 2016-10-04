@@ -26,6 +26,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'fabrication'
   gem 'simplecov'
+  gem 'faker'
 end
 
 group :development do

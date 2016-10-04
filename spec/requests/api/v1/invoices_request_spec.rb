@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "invoice actions" do
   it "display a list of all invoices records" do
-    invoices = create(:invoice, 3)
+    invoices = 3.times { Fabricate(:invoice) }
     get "/api/v1/invoices.json"
     parse_invoice = JSON.parse(response.body)
 
@@ -11,19 +11,16 @@ describe "invoice actions" do
   end
 
   it "display specific invoice" do
-    invoice = create(:invoice, status: "approved")
+    invoice = Fabricate(:invoice)
     get "/api/v1/invoices/#{invoice.id}.json"
     parse_invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parse_invoice["status"]).to eq("approved")
+    expect(parse_invoice["status"]).to eq(invoice.status)
   end
 
   it "finds a single invoice" do
-    invoice = create(:invoice,
-                    customer_id: 1,
-                    merchant_id: 2,
-                    status: "approved")
+    invoice = Fabricate(:invoice)
 
     parameters = {id: invoice.id,
                   customer_id: invoice.customer_id,
@@ -33,7 +30,7 @@ describe "invoice actions" do
                   updated_at: invoice.updated_at
                 }
 
-    get "/api/v1/invoices/find?#{parameters[:status]}"
+    get "/api/v1/invoices/find?status=#{parameters[:status]}"
 
     parse_invoice = JSON.parse(response.body)
 
