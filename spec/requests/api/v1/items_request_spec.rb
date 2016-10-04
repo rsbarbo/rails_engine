@@ -9,4 +9,13 @@ describe "items actions" do
     expect(response).to be_success
     expect(parse_items.count).to eq(3)
   end
+
+  it "display specific item" do
+    item = Fabricate(:item)
+    get "/api/v1/items/#{item.id}.json"
+    parse_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(parse_item["name"]).to eq(item.name)
+  end
 end
