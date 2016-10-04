@@ -33,9 +33,9 @@ describe "items actions" do
   end
 
   it "finds a multiple items by single parameters" do
-    item_1 = Fabricate(:item, unit_price: 198)
-    item_2 = Fabricate(:item, unit_price: 199)
-    item_3 = Fabricate(:item, unit_price: 199)
+    Fabricate(:item, unit_price: 198)
+    Fabricate(:item, unit_price: 199)
+    Fabricate(:item, unit_price: 199)
 
     get "/api/v1/items/find_all?unit_price=199"
 
@@ -43,5 +43,18 @@ describe "items actions" do
 
     expect(response).to be_success
     expect(parse_item.count).to eq(2)
+  end
+
+  it "it returns an existent random item when given random path" do
+    Fabricate(:item, unit_price: 197)
+    Fabricate(:item, unit_price: 198)
+    Fabricate(:item, unit_price: 199)
+
+    get "/api/v1/items/random"
+
+    parse_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(parse_item.count).to eq(1)
   end
 end
