@@ -4,6 +4,7 @@ class Api::V1::Items::SearchController < ApplicationController
   end
 
   def show
+    render json: Item.find_by(check_params)
   end
 
   private
