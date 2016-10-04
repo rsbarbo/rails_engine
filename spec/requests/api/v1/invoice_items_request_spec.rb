@@ -18,6 +18,4 @@ describe "invoice_items actions" do
     expect(parse_invoice_items).to be_success
     expect(parse_invoice_items.count).to eq(1)
   end
-
-
 end
