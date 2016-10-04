@@ -1,14 +1,19 @@
 class Api::V1::Invoices::SearchController < ApplicationController
-  def show
-    render json: Invoice.find_by(checkparams.to_sym => params[checkparams])
+  def index
+    render json: Invoice.where(check_params)
   end
 
-  def index
-    render json: Invoice.where(checkparams.to_sym => params[checkparams])
+  def show
+    render json: Invoice.find_by(check_params)
   end
 
   private
-  def checkparams
-    params.keys.first
+  def check_params
+    params.permit(:id,
+                  :customer_id,
+                  :merchant_id,
+                  :status,
+                  :created_at,
+                  :updated_at)
   end
 end
