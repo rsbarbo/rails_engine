@@ -1,41 +1,47 @@
 require 'rails_helper'
 
-describe "merchant record endpoints" do
-  it "returns a list of all merchant records" do
-    merchants = 3.times { Fabricate(:merchant) }
-    get "/api/v1/merchants.json"
-    parsed_merchants = JSON.parse(response.body)
+describe "transaction record endpoints" do
+  it "returns a list of all transaction records" do
+    transactions = 3.times { Fabricate(:transaction) }
+
+    get "/api/v1/transactions.json"
+
+    parsed_transactions = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parsed_merchants.count).to eq(3)
+    expect(parsed_transactions.count).to eq(3)
   end
 
-  it "returns a specific merchant" do
-    merchant = Fabricate(:merchant)
-    get "/api/v1/merchants/#{merchant.id}.json"
-    parsed_merchant = JSON.parse(response.body)
+  it "returns a specific transaction" do
+    transaction = Fabricate(:transaction, credit_card_number: 12345)
+
+    get "/api/v1/transactions/#{transaction.id}.json"
+
+    parsed_transaction = JSON.parse(response.body)
+
     expect(response).to be_success
-    expect(parsed_merchant["name"]).to eq(merchant.name)
+    expect(parsed_transaction["credit_card_number"].to_i).to eq(transaction.credit_card_number)
   end
 
-  it "returns a single merchant by a single parameter, case-insensitive" do
-    merchant1 = Fabricate(:merchant, name: "Amazon", created_at: "2012-03-25 14:53:59 UTC")
-    merchant2 = Fabricate(:merchant, name: "Overstock", created_at: "2012-03-27 14:53:59 UTC")
+  it "returns a single transaction by a single parameter, case-insensitive" do
+    transaction1 = Fabricate(:transaction, credit_card_number: 12345, result: "success")
+    transaction2 = Fabricate(:transaction, credit_card_number: 67890, result: "failed")
 
-    get "/api/v1/merchants/find?name=Amazon"
+    get "/api/v1/transactions/find?credit_card_number=12345"
 
-    parsed_merchant = JSON.parse(response.body)
+    parsed_transaction = JSON.parse(response.body)
+
     expect(response).to be_success
-    expect(parsed_merchant["id"]).to eq(merchant1.id)
-    expect(parsed_merchant["name"]).to eq(merchant1.name)
+    expect(parsed_transaction["id"]).to eq(transaction1.id)
+    expect(parsed_transaction["credit_card_number"]).to eq(transaction1.credit_card_number)
 
     #maybe make a separate test?
-    get "/api/v1/merchants/find?name=amazon"
+    get "/api/v1/transactions/find?result=Success"
 
     parsed_merchant = JSON.parse(response.body)
     expect(response).to be_success
-    expect(parsed_merchant["id"]).to eq(merchant1.id)
-    expect(parsed_merchant["name"]).to eq(merchant1.name)
+    expect(parsed_transaction["id"]).to eq(transaction1.id)
+    expect(parsed_transaction["credit_card_number"]).to eq(transaction1.credit_card_number)
 
     # get "/api/v1/merchants/find?created_at=2012-03-25 14:53:59 UTC"
     # parsed_merchant = JSON.parse(response.body)
@@ -44,34 +50,33 @@ describe "merchant record endpoints" do
     # expect(parsed_merchant["name"]).to eq(merchant1.name)
   end
 
-  it "returns multiple merchants by a single parameter, case-insensitive" do
+  it "returns multiple transactions by a single parameter, case-insensitive" do
     #note that creating merchant1 and merchant2 this way is a hypothetical for testing purposes only. In reality there would only be one merchant object with the name "Amazon"
-    merchant1 = Fabricate(:merchant, name: "Amazon")
-    merchant2 = Fabricate(:merchant, name: "Amazon")
+    transaction1 = Fabricate(:transaction, credit_card_number: 12345, result: "success")
+    transaction2 = Fabricate(:transaction, credit_card_number: 12345, result: "failed")
 
-    get "/api/v1/merchants/find_all?name=Amazon"
-
-    parsed_merchants = JSON.parse(response.body)
+    get "/api/v1/transactions/find_all?credit_card_number=12345"
+    parsed_transactions = JSON.parse(response.body)
     expect(response).to be_success
-    expect(parsed_merchants.count).to eq(2)
+    expect(parsed_transactions.count).to eq(2)
 
     #maybe make a separate test?
-    get "/api/v1/merchants/find_all?name=amazon"
+    get "/api/v1/transactions/find_all?result=Failed"
 
-    parsed_merchants = JSON.parse(response.body)
-
+    parsed_transactions = JSON.parse(response.body)
+    byebug
     expect(response).to be_success
-    expect(parsed_merchants.count).to eq(2)
+    expect(parsed_transactions.count).to eq(1)
   end
 
-  it "returns a single random merchant" do
-    merchant1 = Fabricate(:merchant, name: "Amazon")
-    merchant2 = Fabricate(:merchant, name: "Overstock")
-    merchant3 = Fabricate(:merchant, name: "Everlane")
-
-    get "/api/v1/merchants/random.json"
-    parsed_merchant = JSON.parse(response.body)
-    expect(response).to be_success
-    expect(parsed_merchant.count).to eq(1)
-  end
+  # it "returns a single random merchant" do
+  #   merchant1 = Fabricate(:merchant, name: "Amazon")
+  #   merchant2 = Fabricate(:merchant, name: "Overstock")
+  #   merchant3 = Fabricate(:merchant, name: "Everlane")
+  #
+  #   get "/api/v1/merchants/random.json"
+  #   parsed_merchant = JSON.parse(response.body)
+  #   expect(response).to be_success
+  #   expect(parsed_merchant.count).to eq(1)
+  # end
 end
