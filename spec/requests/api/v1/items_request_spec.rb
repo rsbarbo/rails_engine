@@ -33,15 +33,15 @@ describe "items actions" do
   end
 
   it "finds a multiple items by single parameters" do
-    item_1 = Fabricate(:item, unit_price: 197)
-    item_2 = Fabricate(:item, unit_price: 198)
+    item_1 = Fabricate(:item, unit_price: 198)
+    item_2 = Fabricate(:item, unit_price: 199)
     item_3 = Fabricate(:item, unit_price: 199)
 
-    get "/api/v1/items/find_all?status=approved"
+    get "/api/v1/items/find_all?unit_price=199"
 
     parse_item = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parse_item.count).to eq(3)
+    expect(parse_item.count).to eq(2)
   end
 end
