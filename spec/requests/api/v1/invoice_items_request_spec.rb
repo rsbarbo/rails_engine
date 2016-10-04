@@ -5,14 +5,12 @@ describe "invoice_items actions" do
     item = Fabricate(:item)
     invoice_item = Fabricate(:invoice_item, item_id: item.id)
 
-    byebug
-
-    get '/api/v1/invoice_items/2/item'
+    get "/api/v1/invoice_items/#{invoice_item.id}/item"
     expect(response).to be_success
 
-    content = JSON.parse(response.body)
+    invoice_item_parse = JSON.parse(response.body)
 
-    expect(content['name']).to eq("Item Qui Esse")
-    expect(content['id']).to eq(1)
+    expect(invoice_item_parse['name']).to eq(item.name)
+    expect(invoice_item_parse['id']).to eq(1)
   end
 end
