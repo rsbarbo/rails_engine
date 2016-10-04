@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "invoice actions" do
   it "display a list of all invoices records" do
-    invoices = 3.times { Fabricate(:invoice) }
+    3.times { Fabricate(:invoice) }
     get "/api/v1/invoices.json"
     parse_invoice = JSON.parse(response.body)
 
@@ -33,16 +33,16 @@ describe "invoice actions" do
     expect(parse_invoice["status"]).to eq(invoice.status)
   end
 
-  it "finds a multiple invoices by single parameters" do
-    invoice_1 = Fabricate(:invoice, status: "approved")
-    invoice_2 = Fabricate(:invoice, status: "approved")
-    invoice_3 = Fabricate(:invoice, status: "approved")
+  it "it returns an existent random invoice when given random path" do
+    Fabricate(:invoice, status: "approved")
+    Fabricate(:invoice, status: "pending")
+    Fabricate(:invoice, status: "paid")
 
-    get "/api/v1/invoices/find_all?status=approved"
+    get "/api/v1/invoices/random"
 
     parse_invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parse_invoice.count).to eq(3)
+    expect(parse_invoice.count).to eq(1)
   end
 end
