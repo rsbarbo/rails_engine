@@ -37,7 +37,6 @@ describe "transaction record endpoints" do
 
     #maybe make a separate test?
     get "/api/v1/transactions/find?result=Success"
-
     parsed_merchant = JSON.parse(response.body)
     expect(response).to be_success
     expect(parsed_transaction["id"]).to eq(transaction1.id)
@@ -68,14 +67,13 @@ describe "transaction record endpoints" do
     expect(parsed_transactions.count).to eq(1)
   end
 
-  # it "returns a single random merchant" do
-  #   merchant1 = Fabricate(:merchant, name: "Amazon")
-  #   merchant2 = Fabricate(:merchant, name: "Overstock")
-  #   merchant3 = Fabricate(:merchant, name: "Everlane")
-  #
-  #   get "/api/v1/merchants/random.json"
-  #   parsed_merchant = JSON.parse(response.body)
-  #   expect(response).to be_success
-  #   expect(parsed_merchant.count).to eq(1)
-  # end
+  it "returns a single random transaction" do
+    transaction1 = Fabricate(:transaction, credit_card_number: 12345, result: "success")
+    transaction2 = Fabricate(:transaction, credit_card_number: 12345, result: "failed")
+
+    get "/api/v1/transactions/random.json"
+    parsed_transaction = JSON.parse(response.body)
+    expect(response).to be_success
+    expect(parsed_transaction.count).to eq(1)
+  end
 end
