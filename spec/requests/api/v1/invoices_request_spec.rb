@@ -19,18 +19,10 @@ describe "invoice actions" do
     expect(parse_invoice["status"]).to eq(invoice.status)
   end
 
-  it "finds a single invoice" do
+  it "finds a single invoice by single parameters" do
     invoice = Fabricate(:invoice)
 
-    parameters = {id: invoice.id,
-                  customer_id: invoice.customer_id,
-                  merchant_id: invoice.merchant_id,
-                  status: invoice.status,
-                  created_at: invoice.created_at,
-                  updated_at: invoice.updated_at
-                }
-
-    get "/api/v1/invoices/find?status=#{parameters[:status]}"
+    get "/api/v1/invoices/find?status=#{invoice.status}"
 
     parse_invoice = JSON.parse(response.body)
 
@@ -39,5 +31,18 @@ describe "invoice actions" do
     expect(parse_invoice["customer_id"]).to eq(invoice.customer_id)
     expect(parse_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(parse_invoice["status"]).to eq(invoice.status)
+  end
+
+  it "finds a multiple invoices by single parameters" do
+    invoice_1 = Fabricate(:invoice, status: "approved")
+    invoice_2 = Fabricate(:invoice, status: "approved")
+    invoice_3 = Fabricate(:invoice, status: "approved")
+
+    get "/api/v1/invoices/find_all?status=approved"
+
+    parse_invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(parse_invoice.count).to eq(3)
   end
 end
