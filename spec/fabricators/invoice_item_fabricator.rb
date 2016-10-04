@@ -1,6 +1,6 @@
 Fabricator(:invoice_item) do
-  item #id needs foreign key
-  invoice #id needs foreign key
-  quantity #needs faker
-  unit_price #needs to be decimal
+  item
+  invoice
+  quantity { Faker::Number.decimal(2) }
+  unit_price { Faker::Commerce.price }
 end
