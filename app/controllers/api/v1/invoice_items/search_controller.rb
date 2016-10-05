@@ -10,9 +10,10 @@ class Api::V1::InvoiceItems::SearchController < ApplicationController
   private
   def check_params
     params.permit(:id,
-                  :customer_id,
-                  :merchant_id,
-                  :status,
+                  :quantity,
+                  :unit_price,
+                  :item_id,
+                  :invoice_id,
                   :created_at,
                   :updated_at)
   end
