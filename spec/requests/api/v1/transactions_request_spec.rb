@@ -20,7 +20,7 @@ describe "transaction record endpoints" do
     parsed_transaction = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parsed_transaction["credit_card_number"].to_i).to eq(transaction.credit_card_number)
+    expect(parsed_transaction["credit_card_number"]).to eq(transaction.credit_card_number)
   end
 
   it "returns a single transaction by a single parameter, case-insensitive" do
