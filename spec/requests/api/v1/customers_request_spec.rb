@@ -44,11 +44,11 @@ describe "customer record endpoints" do
     expect(parsed_customer["id"]).to eq(customer2.id)
     expect(parsed_customer["last_name"]).to eq(customer2.last_name)
 
-    # get "/api/v1/merchants/find?created_at=2012-03-25 14:53:59 UTC"
-    # parsed_merchant = JSON.parse(response.body)
+    # get "/api/v1/customers/find?created_at=#{customer1.created_at}"
+    # parsed_customer = JSON.parse(response.body)
     # expect(response).to be_success
-    # expect(parsed_merchant["id"]).to eq(merchant1.id)
-    # expect(parsed_merchant["name"]).to eq(merchant1.name)
+    # expect(parsed_customer["id"]).to eq(customer1.id)
+    # expect(parsed_customer["first_name"]).to eq(customer1.name)
   end
 
   it "returns multiple customers by a single parameter, case-insensitive" do
