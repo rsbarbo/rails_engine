@@ -25,6 +25,8 @@ describe "invoices relationships endpoints" do
     expect(parsed_invoice_items.count).to eq(2)
   end
 
+  
+
   it "returns the associated customer" do
 
   end
