@@ -25,13 +25,7 @@ describe "invoices relationships endpoints" do
     expect(parsed_invoice_items.count).to eq(2)
   end
 
-  it "returns a collection of associated items" do
-    invoice_item = Fabricate(:invoice_item)
-
-    get "/api/v1/invoices/#{invoice_item.invoice_id}/items"
-    parsed_items = JSON.parse(response_body)
-  end
-
+  
 
   it "returns the associated customer" do
 
