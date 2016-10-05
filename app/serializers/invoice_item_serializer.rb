@@ -1,5 +1,6 @@
 class InvoiceItemSerializer < ActiveModel::Serializer
-  attributes :id, :quantity, :cents_to_dollar, :item_id, :invoice_id
+  attributes :id, :invoice_id, :item_id, :quantity
+  attribute :cents_to_dollar, key: :unit_price
 
   def cents_to_dollar
     "#{'%.2f' % (object.unit_price/100.0)}"
