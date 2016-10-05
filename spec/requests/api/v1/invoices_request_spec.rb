@@ -45,4 +45,5 @@ describe "invoice actions" do
     expect(response).to be_success
     expect(parse_invoice.count).to eq(1)
   end
+
 end
