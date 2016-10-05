@@ -44,6 +44,8 @@ describe "customer record endpoints" do
     expect(parsed_customer["id"]).to eq(customer2.id)
     expect(parsed_customer["last_name"]).to eq(customer2.last_name)
 
+    get "/api/v1/customers/find?id=#{customer2.id}"
+    expect(response).to be_success
     # get "/api/v1/customers/find?created_at=#{customer1.created_at}"
     # parsed_customer = JSON.parse(response.body)
     # expect(response).to be_success
@@ -67,6 +69,9 @@ describe "customer record endpoints" do
     parsed_customers = JSON.parse(response.body)
     expect(response).to be_success
     expect(parsed_customers.count).to eq(1)
+
+    get "/api/v1/customers/find_all?find_all?id=#{customer2.id}"
+    expect(response).to be_success
   end
 
   it "returns a single random customer" do
