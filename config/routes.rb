@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         get "/find", to: "search#show"
         get "/random", to: "random#show"
         get "/find_all", to: "search#index"
+        get "/:id/customers_with_pending_invoices", to: "customers_with_pending_invoices#show"
       end
 
       namespace :transactions do
