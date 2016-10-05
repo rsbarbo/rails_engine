@@ -10,13 +10,13 @@ class Api::V1::InvoiceItems::SearchController < ApplicationController
   private
   def check_params
     clean_params = params.permit(:id,
-                  :quantity,
-                  :unit_price,
-                  :item_id,
-                  :invoice_id,
-                  :created_at,
-                  :updated_at)
+                                 :quantity,
+                                 :unit_price,
+                                 :item_id,
+                                 :invoice_id,
+                                 :created_at,
+                                 :updated_at)
 
-  clean_params_checker(clean_params)
+    clean_params_checker(clean_params)
   end
 end
