@@ -43,5 +43,5 @@ namespace :load do
     csv.each { |row| InvoiceItem.create!(row.to_hash) }
   end
 
-  task :all => [:customers, :merchants, :items, :transactions, :invoices, :invoice_items]
+  task :all => [:customers, :merchants, :invoices, :items, :transactions, :invoice_items]
 end
