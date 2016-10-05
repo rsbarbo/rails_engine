@@ -27,6 +27,4 @@ class Api::V1::Merchants::SearchController < ApplicationController
   def numbers_in_params?
     params[merchant_params.keys.first].to_i > 0
   end
-
-
 end
