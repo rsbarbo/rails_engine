@@ -20,7 +20,7 @@ describe "invoice_items actions" do
     parse_invoice_items = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parse_invoice_items["cents_to_dollar"]).to eq("0.81")
+    expect(parse_invoice_items["unit_price"]).to eq("0.81")
   end
 
   it "it returns an existent random invoice-item when given random path" do
