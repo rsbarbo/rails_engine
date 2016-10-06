@@ -33,6 +33,19 @@ describe "invoice actions" do
     expect(parse_invoice["status"]).to eq(invoice.status)
   end
 
+  it "finds a multiple invoices by single parameters" do
+    Fabricate(:invoice, status: "shipped")
+    Fabricate(:invoice, status: "shipped")
+    Fabricate(:invoice, status: "something else")
+
+    get "/api/v1/invoices/find_all?status=shipped"
+
+    parse_invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(parse_invoice.count).to eq(2)
+  end
+
   it "it returns an existent random invoice when given random path" do
     Fabricate(:invoice, status: "approved")
     Fabricate(:invoice, status: "pending")
