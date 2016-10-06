@@ -15,10 +15,11 @@ class Merchant < ApplicationRecord
   private
   def customer_finder
     Customer.find(customers.joins("INNER JOIN transactions ON transactions.invoice_id=invoices.id").
-             where(transactions: { result: "success" }).
-             group('id').
-             order("count_transactions  DESC").
-             limit(1).
-             count(:transactions).keys.first)
+                  where(transactions: { result: "success" }).
+                  group('id').
+                  order("count_transactions  DESC").
+                  limit(1).
+                  count(:transactions).keys.first
+                  )
   end
 end
