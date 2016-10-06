@@ -16,7 +16,7 @@ class Api::V1::InvoiceItems::SearchController < ApplicationController
                                  :invoice_id,
                                  :created_at,
                                  :updated_at)
-
+                                 
     clean_params_checker(clean_params)
   end
 end

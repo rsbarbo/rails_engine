@@ -35,4 +35,28 @@ describe "invoice_items actions" do
     expect(response).to be_success
     expect(parse_invoice_items.count).to eq(1)
   end
+
+  it "finds a single invoice item by single parameters" do
+    invoice_item = Fabricate(:invoice_item, unit_price: "10.99")
+
+    get "/api/v1/invoices/find?unit_price=10.99"
+
+    parse_invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(parse_invoice_item["id"]).to eq(invoice_item.invoice_id)
+  end
+
+  it "finds a multiple invoice items by single parameters" do
+    Fabricate(:invoice_item, unit_price: 1099)
+    Fabricate(:invoice_item, unit_price: 1099)
+    Fabricate(:invoice_item, unit_price: 999)
+
+    get "/api/v1/invoice_items/find_all?unit_price=10.99"
+
+    parse_invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(parse_invoice_item.count).to eq(2)
+  end
 end
