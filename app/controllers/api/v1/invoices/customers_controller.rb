@@ -3,9 +3,4 @@ class Api::V1::Invoices::CustomersController < ApplicationController
     @customer = Invoice.find(params[:id]).customer
     render json: @customer
   end
-
-  def show
-  end
-
-
 end

@@ -28,6 +28,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'faker'
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
 end
 
 group :development do

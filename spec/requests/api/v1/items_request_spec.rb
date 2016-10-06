@@ -40,7 +40,7 @@ describe "items actions" do
     get "/api/v1/items/find_all?unit_price=199"
 
     parse_item = JSON.parse(response.body)
-
+    
     expect(response).to be_success
     expect(parse_item.count).to eq(2)
   end
