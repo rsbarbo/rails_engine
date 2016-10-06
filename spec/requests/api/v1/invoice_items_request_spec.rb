@@ -36,15 +36,17 @@ describe "invoice_items actions" do
     expect(parse_invoice_items.count).to eq(1)
   end
 
-  it "finds a single invoice item by single parameters" do
-    invoice_item = Fabricate(:invoice_item, unit_price: "10.99")
+  it "it returns an existent random invoice-item when given random path" do
+    Fabricate(:invoice_item, unit_price: 81)
+    Fabricate(:invoice_item, unit_price: 82)
+    Fabricate(:invoice_item, unit_price: 83)
 
-    get "/api/v1/invoices/find?unit_price=10.99"
+    get "/api/v1/invoice_items/find?=unit_price=81"
 
-    parse_invoice_item = JSON.parse(response.body)
+    parse_invoice_items = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(parse_invoice_item["id"]).to eq(invoice_item.invoice_id)
+    expect(parse_invoice_items["unit_price"]).to eq("0.81")
   end
 
   it "finds a multiple invoice items by single parameters" do
