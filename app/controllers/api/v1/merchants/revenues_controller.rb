@@ -10,11 +10,4 @@ class Api::V1::Merchants::RevenuesController < ApplicationController
     render json: revenue
   end
 
-
-
-
-
-
-
-
 end
