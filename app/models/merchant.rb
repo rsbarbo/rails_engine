@@ -25,6 +25,13 @@ class Merchant < ApplicationRecord
     MerchantRevenuesSerializer
   end
 
+  def self.items_with_most_revenue(quantity)
+    joins(invoices: [:transactions, :invoice_items]).
+    group('id').
+    order("sum(invoice_items.quantity * invoice_items.unit_price) DESC").
+    limit(quantity)
+  end
+
   private
   def customer_finder
     Customer.find(customers.joins("INNER JOIN transactions ON transactions.invoice_id=invoices.id").
