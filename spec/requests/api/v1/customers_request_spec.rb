@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "customer record endpoints" do
   it "returns a list of all customer records" do
-    customers = 3.times { Fabricate(:customer) }
+    3.times { Fabricate(:customer) }
 
     get "/api/v1/customers.json"
 
@@ -24,7 +24,7 @@ describe "customer record endpoints" do
   end
 
   it "returns a single customer by a single parameter, case-insensitive" do
-    customer1 = Fabricate(:customer, first_name: "Chase", last_name: "Dunagan")
+    Fabricate(:customer, first_name: "Chase", last_name: "Dunagan")
     customer2 = Fabricate(:customer, first_name: "Susi", last_name: "Irwin")
 
     get "/api/v1/customers/find?first_name=Susi"
@@ -55,7 +55,7 @@ describe "customer record endpoints" do
 
   it "returns multiple customers by a single parameter, case-insensitive" do
     #note that creating merchant1 and merchant2 this way is a hypothetical for testing purposes only. In reality there would only be one merchant object with the name "Amazon"
-    customer1 = Fabricate(:customer, first_name: "Chase", last_name: "Dunagan")
+    Fabricate(:customer, first_name: "Chase", last_name: "Dunagan")
     customer2 = Fabricate(:customer, first_name: "Susi", last_name: "Dunagan")
 
     get "/api/v1/customers/find_all?last_name=Dunagan"
@@ -75,8 +75,8 @@ describe "customer record endpoints" do
   end
 
   it "returns a single random customer" do
-    customer1 = Fabricate(:customer, first_name: "Chase", last_name: "Dunagan")
-    customer2 = Fabricate(:customer, first_name: "Susi", last_name: "Irwin")
+    Fabricate(:customer, first_name: "Chase", last_name: "Dunagan")
+    Fabricate(:customer, first_name: "Susi", last_name: "Irwin")
 
     get "/api/v1/customers/random.json"
     parsed_customer = JSON.parse(response.body)
