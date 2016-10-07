@@ -13,6 +13,10 @@ class Merchant < ApplicationRecord
     invoices.joins(:invoice_items, :transactions).where("transactions.result = 'success'").where("invoices.created_at = '#{date}'").sum("invoice_items.quantity * invoice_items.unit_price")/100.0
   end
 
+  def self.top_merchants_by_number_of_items_sold
+    # Merchant.joins(:invoice_items).group("invoice_items.quantity").count --> the key is the quantity, the value is the number of invoice items which had that quantity of an item
+  end
+
   def find_customers_with_pending_invoices
     customers.
     joins("INNER JOIN transactions ON transactions.invoice_id=invoices.id").
