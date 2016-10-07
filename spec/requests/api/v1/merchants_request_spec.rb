@@ -29,7 +29,6 @@ describe "merchant record endpoints" do
     expect(parsed_merchant["id"]).to eq(merchant1.id)
     expect(parsed_merchant["name"]).to eq(merchant1.name)
 
-    #maybe make a separate test?
     get "/api/v1/merchants/find?name=amazon"
 
     parsed_merchant = JSON.parse(response.body)
@@ -39,7 +38,6 @@ describe "merchant record endpoints" do
   end
 
   it "returns multiple merchants by a single parameter, case-insensitive" do
-    #note that creating merchant1 and merchant2 this way is a hypothetical for testing purposes only. In reality there would only be one merchant object with the name "Amazon"
     Fabricate(:merchant, name: "Amazon")
     Fabricate(:merchant, name: "Amazon")
 
