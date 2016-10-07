@@ -12,14 +12,22 @@ class Merchant < ApplicationRecord
     customer_finder
   end
 
+  def self.find_total_revenue_for_spec_date(date)
+    joins(invoices: [:transactions, :invoice_items]).where(invoices: {created_at: date}).where(transactions: { result: "success"}).sum("invoice_items.quantity * invoice_items.unit_price")
+  end
+
+  def active_model_serializer
+    MerchantRevenuesSerializer
+  end
+
   private
   def customer_finder
     Customer.find(customers.joins("INNER JOIN transactions ON transactions.invoice_id=invoices.id").
-                  where(transactions: { result: "success" }).
-                  group('id').
-                  order("count_transactions  DESC").
-                  limit(1).
-                  count(:transactions).keys.first
-                  )
+    where(transactions: { result: "success" }).
+    group('id').
+    order("count_transactions  DESC").
+    limit(1).
+    count(:transactions).keys.first
+    )
   end
 end
