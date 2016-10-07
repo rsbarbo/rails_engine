@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         get "/random", to: "random#show"
         get "/most_revenue", to: "most_revenue#show"
         get "/:id/invoice_items", to: "associated_invoice_items#index"
+        get "/:id/merchant", to: "associated_merchant#show"
       end
 
       namespace :merchants do

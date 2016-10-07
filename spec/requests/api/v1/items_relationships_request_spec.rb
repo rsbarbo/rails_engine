@@ -15,12 +15,14 @@ describe "items relationships endpoints" do
     expect(parsed_invoice_items.count).to eq(2)
   end
 
-  it "returns the associated item" do
-    invoice_item = Fabricate(:invoice_item)
+  it "returns the associated merchant" do
+    merchant = Fabricate(:merchant)
+    item = Fabricate(:item)
+    item.update_attribute(:merchant_id, merchant.id)
 
-    get "/api/v1/invoice_items/#{invoice_item.id}/item"
-    parsed_item = JSON.parse(response.body)
+    get "/api/v1/items/#{item.id}/merchant"
+    parsed_merchant = JSON.parse(response.body)
     expect(response).to be_success
-    expect(parsed_item["id"]).to eq(invoice_item.item_id)
+    expect(parsed_merchant["id"]).to eq(merchant.id)
   end
 end
