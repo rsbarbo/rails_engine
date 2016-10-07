@@ -14,17 +14,7 @@ class Merchant < ApplicationRecord
   end
 
   def self.top_merchants_by_number_of_items_sold(quantity)
-    # Merchant.joins(:invoice_items).group("invoice_items.quantity").count --> the key is the quantity, the value is the number of invoice items which had that quantity of an item
-
-    # Item.joins(:merchant, :invoice_items, :transactions).where("transactions.result = 'success'").group("merchants.id").distinct.count
-
-    # Merchant.joins(invoices: [:transactions, :invoice_items]).group('id')
-    #
-    # Merchant.joins(:invoices, :invoice_items, :transactions).group("merchants.id")
-
-    # joins(:invoice_items, :transactions).where("transactions.result = 'success'").group("merchants.id").sum("invoice_items.quantity")
-
-    joins(:invoice_items, :transactions).where("transactions.result = 'success'").limit(quantity).group("merchants.id").sum("invoice_items.quantity")
+    joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'").group('merchants.id').order("sum(invoice_items.quantity) DESC").limit(quantity)
   end
 
   def find_customers_with_pending_invoices

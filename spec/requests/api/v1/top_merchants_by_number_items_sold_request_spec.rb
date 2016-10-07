@@ -3,7 +3,6 @@ require 'rails_helper'
 describe "top merchants by number of items sold" do
   it "returns top merchants by number of items sold" do
     merchant = Fabricate(:merchant, name: "Amazon", id: 1)
-    merchant2 = Fabricate(:merchant, name: "Overstock", id: 2)
     invoice1 = Fabricate(:invoice)
     invoice2 = Fabricate(:invoice)
     invoice1.update_attribute(:merchant_id, merchant.id)
@@ -20,6 +19,6 @@ describe "top merchants by number of items sold" do
 
     parsed_merchants = JSON.parse(response.body)
     expect(response).to be_success
-    expect(parsed_merchants.count).to eq(2)
+    expect(parsed_merchants.count).to eq(1)
   end
 end
