@@ -12,9 +12,4 @@ class Item < ApplicationRecord
     order("sum(invoice_items.quantity * invoice_items.unit_price) DESC").
     limit(quantity)
   end
-
-
-  def self.find_total_revenue_for_spec_date
-    byebug
-  end
 end
