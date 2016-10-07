@@ -44,7 +44,7 @@ Rails.application.routes.draw do
         get "/find_all", to: "search#index"
         get '/:id/invoice', to: 'invoices#show'
       end
-
+      
       namespace :customers do
         get "/find", to: "search#show"
         get "/random", to: "random#show"
