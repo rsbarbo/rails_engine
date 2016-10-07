@@ -4,6 +4,7 @@ Rails Engine is a Module 3 Project at Turing School of Software and Design. The 
 
 * Ruby version: 2.3.1
 * Rails version: 5.0.0.1
+
 * To use:
     * 1) git clone https://github.com/tgisg/rails_engine.git
     * 2) bundle install
