@@ -5,8 +5,8 @@ describe "The most revenue for items" do
     group_size_one = 1
     group_size_two = 7
 
-    total_revenue_one = get "/api/v1/merchants/most_revenue?quantity=#{group_size_one}"
-    total_revenue_two = get "/api/v1/merchants/most_revenue?quantity=#{group_size_two}"
+    get "/api/v1/merchants/most_revenue?quantity=#{group_size_one}"
+    get "/api/v1/merchants/most_revenue?quantity=#{group_size_two}"
 
     expect(response).to be_success
   end
