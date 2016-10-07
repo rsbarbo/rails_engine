@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "merchant record endpoints" do
   it "returns a list of all merchant records" do
-    merchants = 3.times { Fabricate(:merchant) }
+    3.times { Fabricate(:merchant) }
     get "/api/v1/merchants.json"
     parsed_merchants = JSON.parse(response.body)
 
@@ -20,7 +20,7 @@ describe "merchant record endpoints" do
 
   it "returns a single merchant by a single parameter, case-insensitive" do
     merchant1 = Fabricate(:merchant, name: "Amazon", created_at: "2012-03-25 14:53:59 UTC")
-    merchant2 = Fabricate(:merchant, name: "Overstock", created_at: "2012-03-27 14:53:59 UTC")
+    Fabricate(:merchant, name: "Overstock", created_at: "2012-03-27 14:53:59 UTC")
 
     get "/api/v1/merchants/find?name=Amazon"
 
@@ -36,18 +36,12 @@ describe "merchant record endpoints" do
     expect(response).to be_success
     expect(parsed_merchant["id"]).to eq(merchant1.id)
     expect(parsed_merchant["name"]).to eq(merchant1.name)
-
-    # get "/api/v1/merchants/find?created_at=2012-03-25 14:53:59 UTC"
-    # parsed_merchant = JSON.parse(response.body)
-    # expect(response).to be_success
-    # expect(parsed_merchant["id"]).to eq(merchant1.id)
-    # expect(parsed_merchant["name"]).to eq(merchant1.name)
   end
 
   it "returns multiple merchants by a single parameter, case-insensitive" do
     #note that creating merchant1 and merchant2 this way is a hypothetical for testing purposes only. In reality there would only be one merchant object with the name "Amazon"
-    merchant1 = Fabricate(:merchant, name: "Amazon")
-    merchant2 = Fabricate(:merchant, name: "Amazon")
+    Fabricate(:merchant, name: "Amazon")
+    Fabricate(:merchant, name: "Amazon")
 
     get "/api/v1/merchants/find_all?name=Amazon"
 
@@ -55,7 +49,6 @@ describe "merchant record endpoints" do
     expect(response).to be_success
     expect(parsed_merchants.count).to eq(2)
 
-    #maybe make a separate test?
     get "/api/v1/merchants/find_all?name=amazon"
 
     parsed_merchants = JSON.parse(response.body)
@@ -65,9 +58,9 @@ describe "merchant record endpoints" do
   end
 
   it "returns a single random merchant" do
-    merchant1 = Fabricate(:merchant, name: "Amazon")
-    merchant2 = Fabricate(:merchant, name: "Overstock")
-    merchant3 = Fabricate(:merchant, name: "Everlane")
+    Fabricate(:merchant, name: "Amazon")
+    Fabricate(:merchant, name: "Overstock")
+    Fabricate(:merchant, name: "Everlane")
 
     get "/api/v1/merchants/random.json"
     parsed_merchant = JSON.parse(response.body)
